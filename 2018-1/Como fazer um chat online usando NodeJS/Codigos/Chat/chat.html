@@ -1,16 +1,6 @@
 <html>
     <head>
         <title> Chat realtime usando Node.js e Socket.io </title>
-        <script>
-
-            function enviarMensagem(){
-                const nome = document.getElementById('nome').value;
-                if( nome == '' ){
-                    alert('Nome vazio');
-                }
-            }
-
-        </script>
         <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body { font: 13px Helvetica, Arial; }
@@ -29,7 +19,46 @@
             <label style="color:#fff; width: 10%">Nome:</label>
             <input id="nome" />
             <input id="m" autocomplete="off" />
-            <button onclick="enviaMensagem();">Enviar</button>
+            <button>Enviar</button>
         </form>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            $(function(){
+               var socket = io();
+               $('form').submit(function(){
+               
+                  if( $('#nome').val() == '' || $('#m').val() == '' ){
+                     alert('Nome e mensagem não podem ficar vazios');
+                  }else{
+                     
+                     /*
+                        mando o nome separado por '|' para o servidor saber o que é o nome
+                        e o que é mensagem, claro que se a pessoa ter o caractere '|' no nome
+                        vai ser um problema
+                     */
+                     const mensagem = $('#nome').val() + "|" + $('#m').val();
+                     
+                     // manda a mensagem para o servidor
+                     socket.emit('chat message', mensagem);
+                     // limpa o campo para a nova mensagem
+                     $('#m').val('');
+                     // volta o foco para a caixa de mensagem
+                     $('#m').focus();
+                  }
+                  
+                  // deve se retornar false para o formulário não ser enviado para o servidor
+                  // e o usuário perder todas as mensagens
+                  return false; 
+               }); 
+            
+               socket.on('chat message', function(msg){
+                  
+                  // adiciona mensagem recebida pelo servidor
+                  $('#messages').append($('<li>').text(msg));
+                  window.scrollTo(0, document.body.scrollHeight);
+               });
+           });
+        </script>
     </body>
 </html>
