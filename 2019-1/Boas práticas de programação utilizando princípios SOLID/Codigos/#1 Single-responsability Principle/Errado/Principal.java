@@ -1,4 +1,4 @@
-public class Figuras2D {
+public class Principal {
 
     public static double calculaAreaQuadrado(double lado) {
         return Math.pow(lado, 2);
