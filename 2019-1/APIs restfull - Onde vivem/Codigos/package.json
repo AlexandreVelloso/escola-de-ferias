@@ -1,0 +1,15 @@
+{
+  "name": "introducao-api-restfull",
+  "version": "1.0.0",
+  "description": "Palestra na escola de férias 2019/1 sobre APIs restfull",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alexandre Velloso",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "request": "^2.88.0"
+  }
+}
